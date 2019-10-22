@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Travel Dashboard</title>
+    <style>
+         *{
+            margin: 0px;
+            padding: 0px;
+            font-family: "Nunito", sans-serif
+        }
+        header{
+            padding: 10px;
+            margin-bottom: 60px;
+            background-color: #be8585;
+        }
+        header > h2{
+           margin: 0px 0px 0px 300px;
+        }
+        .display-4{
+            text-align: left;
+            vertical-align: top;
+            line-height: 50px;
+            display: inline-block;
+        }
+         .add{
+            padding: 5px 5px;
+            margin: 0px 0px 0px 1300px;
+            color:black;
+            text-decoration: underline;
+        }
+        .logout{
+            padding: 5px 5px;
+            margin: 0px 0px 0px 1000px;
+            vertical-align: top;
+            line-height: 40px;
+            padding: 5px 5px;
+            display: inline-block;
+            color:black;
+            text-decoration: underline;
+        }
+        .recent{
+            display: inline-block;
+            vertical-align: top;
+            width: 600px;
+            margin-top: 50px;
+        }
+        .others{
+            display: inline-block;
+            margin: 50px 0px 0px 100px;
+            width: 300px;
+        }
+        .title{
+            margin-bottom: 2rem;
+        }
+        .table{
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class = "display-4">Hello, {{user.name}}!</h1>
+        <a href="/logout" class = "logout">Logout</a>
+    </header>
+    <div class = "container">
+        <div class="schedules">
+            <h3>Your Trip Schedules</h3>
+            <table class = "table">
+                <tr  class = "thead-dark">
+                    <th>Destination</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Plan</th>
+                </tr>
+                {% if travels %}
+                    {% for travel in travels %}
+                        <tr>
+                            <td><a href="/travels/destination/{{travel.id}}">{{travel.destination}}</a></td>
+                            <td>{{travel.start_date}}</td>
+                            <td>{{travel.end_date}}</td>
+                            <td>{{travel.description}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}              
+            </table>
+        </div>
+        <div class="plans">
+            <h3>Other User's Travel Plans</h3>
+            <table class = "table">
+                <tr class = "thead-dark">
+                    <th>User</th>
+                    <th>Destination</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Do You Want to Join?</th>
+                </tr>
+                {% if others %}
+                    {% for travel in others %}
+                        <tr>
+                            <td>{{travel.creator.name}}</td>
+                            <td><a href="/travels/destination/{{travel.id}}">{{travel.destination}}</a></td>
+                            <td>{{travel.start_date}}</td>
+                            <td>{{travel.end_date}}</td>
+                            <td><a href="/travels/join/{{travel.id}}">Join</td></a>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <a href="/travels/add" class ="add">Add Travel Plan</a>
+</body>
+</html>

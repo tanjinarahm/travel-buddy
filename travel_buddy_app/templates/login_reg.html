@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Login/Register</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body{
+            padding: 80px;
+        }
+        .display-4{
+            margin-bottom: 40px;
+        }
+        .register{
+            padding: 50px;
+            width: 450px;
+            display: inline-block;
+            border: 1px solid black;
+        }
+        .login{
+            padding: 50px;
+            width: 450px;
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 130px;
+            border: 1px solid black;
+        }
+
+        .title{
+            width: 50%;
+            text-align: center;
+            background-color: #fff;
+            margin-top: -75px;
+            margin-bottom: 40px;
+        }
+        .title2{
+            width: 40%;
+            text-align: center;
+            background-color: #fff;
+            margin-top: -75px;
+            margin-bottom: 40px;
+        }
+
+        form > input{
+            margin-bottom: 13px;
+        }
+        .btn{
+            width: 90px;
+            margin-left: 260px;
+            box-shadow: 5px 5px 5px #746f6f;
+        }
+        .messages{
+            margin-top: 5px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class = "container">
+        <h1 class = "display-4">Welcome!</h1>
+        <div class = "register">
+            <div class="title"><h2>Register</h2></div>
+            {% if messages and request.session.err == "register" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form action="/registerUser" method = "POST">
+                {% csrf_token %}
+                <input type="text" name = "name" placeholder="Name" class = "form-control">
+                <input type="text" name = "username" placeholder="Username" class = "form-control">
+                <input type="password" name = "password" placeholder="Password" class = "form-control">
+                <p style = "font-size: 0.8rem">* Password needs to be at least 8 characters</p>
+                <input type="password" name = "confirm_pw" placeholder="Confirm Password" class = "form-control">
+                <input type="submit" value = "Register" class = "btn btn-danger">
+            </form>
+        </div>
+        <div class = "login">
+            <div class="title2"><h2>Login</h2></div>
+            {% if messages and request.session.err == "login" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form action="/loginUser" method = "POST">
+                {% csrf_token %}
+                <input type="text" name = "username" placeholder="Username" class = "form-control">
+                <input type="password" name = "password" placeholder="Password" class = "form-control">
+                <input type="submit" value = "Login" class = "btn btn-danger">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
