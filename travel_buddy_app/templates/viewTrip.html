@@ -1,57 +1,25 @@
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles/viewtrip.css'%}">
     <title>Destination</title>
-    <style>
-    *{
-        margin: 0px;
-        padding: 0px;
-        font-family: "Nunito", sans-serif
-    }
-    header{
-        padding: 10px;
-        margin-bottom: 60px;
-        background-color: #be8585;
-    }
-    .container{
-        width: 50%;
-    }
-    .home{
-        padding: 5px 5px;
-        margin: 0px 0px 0px 1400px;
-        vertical-align: top;
-        line-height: 40px;
-        display: inline-block;
-        color:black;
-        text-decoration: underline;
-    }
-    .logout{
-        padding: 5px 5px;
-        text-align: left;
-        margin: 0px 0px 0px 10px;
-        vertical-align: top;
-        line-height: 40px;
-        display: inline-block;
-        color:black;
-        text-decoration: underline;
-    }
-    .others{
-        margin-top: 50px;
-    }
-    .display-4{
-        margin-bottom: 15px;
-    }
-    </style>
 </head>
 <body>
-    <header>
-        <a href="/travels" class = "home">Home</a>
-        <a href="/logout" class = "logout">Logout</a>
-    </header>
+    <div>
+        <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+        <nav>
+            <ul>
+                <li><a href="/travels" class="button login-btn">Home</a></li>
+                <li><a class = "button login-btn">|</a></li>
+                <li><a href="/logout" class="button login-btn">Log out</a></li>
+            </ul>
+        </nav>
+    </div>
     <div class = "container">
         <h1 class = "display-4">{{travel.destination}}</h1>
         <h3 style = "margin-left: 20px">Planned by: {{travel.creator.name}}</h3>

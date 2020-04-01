@@ -5,18 +5,59 @@ from .models import *
 import bcrypt
 
 def index(request):
+    all_trips = Travel.objects.all()
+
+    context = {
+        "others": all_trips
+    }
+
+    return render(request, "travels.html", context)
+
+def signup(request):
+    context = {
+        "signup": True
+    }
+    return render(request, "login_reg.html", context)
+
+def login(request):
     return render(request, "login_reg.html")
 
 def travels(request):
     if 'loggedinUser' in request.session:
+            
+        current_user = User.objects.get(id=request.session['loggedinUser'])
+        all_trips = Travel.objects.exclude(creator=current_user)
+
+        all_trips = all_trips.exclude(trip_member=current_user)
+
+        length = len(current_user.joined_trip.all())
+
         context = {
-            "user": User.objects.get(id=request.session['loggedinUser']),
-            "travels" : Travel.objects.filter(trip_member = request.session['loggedinUser']),
-            "others": Travel.objects.exclude(trip_member = request.session['loggedinUser'])
+            "user": current_user,
+            "travels": current_user.joined_trip.all(),
+            "others": all_trips,
+            "logged_in": True,
+            "trip_count": length
         }
-        return render(request, "travels.html", context)
-    else:
-        return redirect("/")
+    else: 
+        all_trips = Travel.objects.all()
+        context = {
+            "logged_in": False,
+             "others": all_trips
+        }
+    return render(request, "travels.html", context)
+
+    # The eedeeit way
+    # if 'loggedinUser' in request.session:
+    #     context = {
+    #         "user": User.objects.get(id=request.session['loggedinUser']),
+    #         "travels" : Travel.objects.filter(trip_member = request.session['loggedinUser']),
+    #         "others": Travel.objects.exclude(trip_member = request.session['loggedinUser']),
+    #         "logged_in": True
+    #     }
+    #     return render(request, "travels.html", context)
+    # else:
+    #     return redirect("/")
 
 def registerUser(request, method = "POST"):
     errors = User.objects.register_validator(request.POST)
@@ -24,7 +65,7 @@ def registerUser(request, method = "POST"):
         request.session['err'] = "register"
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('/travels')
+        return redirect('/signup')
 
     else:
         passwordFromForm = request.POST['password']
@@ -39,7 +80,7 @@ def loginUser(request, method = "POST"):
         request.session['err'] = "login"
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('/')
+        return redirect('/login')
 
     else:
         username = request.POST['username']

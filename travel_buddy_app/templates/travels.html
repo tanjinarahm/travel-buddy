@@ -1,117 +1,194 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{% static 'styles/home.css'%}">
     <title>Travel Dashboard</title>
-    <style>
-         *{
-            margin: 0px;
-            padding: 0px;
-            font-family: "Nunito", sans-serif
-        }
-        header{
-            padding: 10px;
-            margin-bottom: 60px;
-            background-color: #be8585;
-        }
-        header > h2{
-           margin: 0px 0px 0px 300px;
-        }
-        .display-4{
-            text-align: left;
-            vertical-align: top;
-            line-height: 50px;
-            display: inline-block;
-        }
-         .add{
-            padding: 5px 5px;
-            margin: 0px 0px 0px 1300px;
-            color:black;
-            text-decoration: underline;
-        }
-        .logout{
-            padding: 5px 5px;
-            margin: 0px 0px 0px 1000px;
-            vertical-align: top;
-            line-height: 40px;
-            padding: 5px 5px;
-            display: inline-block;
-            color:black;
-            text-decoration: underline;
-        }
-        .recent{
-            display: inline-block;
-            vertical-align: top;
-            width: 600px;
-            margin-top: 50px;
-        }
-        .others{
-            display: inline-block;
-            margin: 50px 0px 0px 100px;
-            width: 300px;
-        }
-        .title{
-            margin-bottom: 2rem;
-        }
-        .table{
-            margin-bottom: 50px;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1 class = "display-4">Hello, {{user.name}}!</h1>
-        <a href="/logout" class = "logout">Logout</a>
-    </header>
-    <div class = "container">
-        <div class="schedules">
-            <h3>Your Trip Schedules</h3>
-            <table class = "table">
-                <tr  class = "thead-dark">
-                    <th>Destination</th>
-                    <th>Travel Start Date</th>
-                    <th>Travel End Date</th>
-                    <th>Plan</th>
-                </tr>
-                {% if travels %}
-                    {% for travel in travels %}
-                        <tr>
-                            <td><a href="/travels/destination/{{travel.id}}">{{travel.destination}}</a></td>
-                            <td>{{travel.start_date}}</td>
-                            <td>{{travel.end_date}}</td>
-                            <td>{{travel.description}}</td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}              
-            </table>
+    {% if logged_in %}
+        <div class="main">
+            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <a href="/logout" class = "logout-btn">Log out</a>
+            <div>
+                <h1 class = "title"> Welcome {{user.name}}!</h1>
+                <a href="#trips" class = "button signup-btn"><button class="learn">Start your journey</button></a>
+            </div>
         </div>
-        <div class="plans">
-            <h3>Other User's Travel Plans</h3>
-            <table class = "table">
-                <tr class = "thead-dark">
-                    <th>User</th>
-                    <th>Destination</th>
-                    <th>Travel Start Date</th>
-                    <th>Travel End Date</th>
-                    <th>Do You Want to Join?</th>
-                </tr>
-                {% if others %}
-                    {% for travel in others %}
-                        <tr>
-                            <td>{{travel.creator.name}}</td>
-                            <td><a href="/travels/destination/{{travel.id}}">{{travel.destination}}</a></td>
-                            <td>{{travel.start_date}}</td>
-                            <td>{{travel.end_date}}</td>
-                            <td><a href="/travels/join/{{travel.id}}">Join</td></a>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
-            </table>
+    {% else %}
+        <div class="main">
+            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <nav>
+                <ul>
+                    <li><a href="/login" class = "button login-btn">Login</a></li>
+                    <li><a href="" class = "button login-btn">|</a></li>
+                    <li><a href="/signup" class = "button login-btn">Sign up</a></li>
+                </ul>
+            </nav>
+            <div>
+                <h1 class = "title">Start Planning Your Adventure Today</h1>
+                <a href="#about" class = "button signup-btn"><button class="learn">Learn More</button></a>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <div class="about-section" id="about">
+        <h2>About Us.</h2>
+        <hr>
+        <div class="about-grid">
+            <img src="/static/img/about2.jpg" class="about-image" alt="about">
+            <p>
+            Have you been searching and searching to travel with someone?<br><br> You have come to the right place if you find yourself in need of finding a travel buddy. You can create trips and view the details of trips until you find the perfect match for you. <br><br>
+           No matter how you imagine your perfect travel buddy, you can always find someone to team up with on Travel Buddy. We try to make the experience of finding a travel buddy as easy as possible so you can start traveling together in no time!!</p>
         </div>
     </div>
-    <a href="/travels/add" class ="add">Add Travel Plan</a>
+
+
+    {% if logged_in %}
+        <div id="trips" class="your-travels-in">
+            <div class="container">
+                <h2>Your Trip Schedules</h2>
+                <hr>
+                {% if travels %}
+                    <div class="cards">
+                        {% for travel in travels %}
+                        <div class="card">
+                            <p style="margin-bottom: 7px; font-weight: lighter;">{{travel.destination}}</p>
+                            <p><span>Creator: </span>{{travel.creator.name}}</p>
+                            <p><span>Start Date: </span>{{travel.start_date}}</p>
+                            <p><span>End Date: </span>{{travel.end_date}}</p>
+                            <p><span>Description: </span>{{travel.description}}</p>
+                            <a href="/travels/destination/{{travel.id}}">More info</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <a href="/travels/add" class = "join-btn"><button class="join">Add Travel Plan</button></a>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="your-travels">
+            <div class="container">
+                <h2>Your Trip Schedule</h2>
+                <hr>
+                <p>Sorry, you dont have any trips yet</p>
+                <img src="/static/img/sadface.png" class="sadface" alt="sad face">
+                <p>  <a href="/login" class = "join-btn"><button class="join">Join</button></a> </p>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <div class="quote-section">
+        <div class="container">
+            <img src="/static/img/world3.png" class="quote-image" alt="world">
+            <h2 class="words">Travel the world together using our website - find your travel partner</h2>
+        </div>
+    </div>
+
+
+    {% if logged_in %}
+        <div class="all-travels">
+            <div class="container">
+                <h2>Other User's Travel Plans</h2>
+                <hr>
+                {% if others %}
+                    <div class="cards">
+                        {% for travel in others %}
+                        <div class="card">
+                            <p style="margin-bottom: 7px; font-weight: lighter;">{{travel.destination}}</p>
+                            <p><span>Creator: </span>{{travel.creator.name}}</p>
+                            <p><span>Start Date: </span>{{travel.start_date}}</p>
+                            <p><span>End Date: </span>{{travel.end_date}}</p>
+                            <a href="/travels/join/{{travel.id}}">Join</a>
+                            <a href="/travels/destination/{{travel.id}}">More info</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="all-travels">
+            <div class="container">
+                <h2>Other User's Travel Plans</h2>
+                <hr>
+                <!-- {% if others %} -->
+                    <div class="cards">
+                        {% for travel in others %}
+                        <div class="card">
+                            <p style="margin-bottom: 7px; font-weight: lighter;">{{travel.destination}}</p>
+                            <p><span>Creator: </span>{{travel.creator.name}}</p>
+                            <p><span>Start Date: </span>{{travel.start_date}}</p>
+                            <p><span>End Date: </span>{{travel.end_date}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                <!-- {% endif %} -->
+            </div>
+        </div>
+    {% endif %}
+    
+    <div class="feedback">
+        <div class="container">
+            <h2>Our Users Feedback.</h2>
+            <hr>
+            <div class="bubbles">
+                <div class="speech-bubble">
+                    <p>Whenever I travelled in the US or abroad I always found someone who joined me on my adventures.</p>
+                    <p class="name">~Tanjina Rahman</p>
+                </div>
+                <div class="speech-bubble">
+                    <p>Whenever I travelled in the US or abroad I always found someone who joined me on my adventures.</p>
+                    <p class="name">~Tanjina Rahman</p>
+                </div>
+                <div class="speech-bubble">
+                    <p>Whenever I travelled in the US or abroad I always found someone who joined me on my adventures.</p>
+                    <p class="name">~Tanjina Rahman</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <img src="/static/img/logo-daone.svg" class="logo" alt="logo">
+            <p>© 2020 Travel Buddy | All rights reserved.</p>
+        </div>
+    </footer>
+
+
 </body>
 </html>
+<!-- <div class="all-travels">
+    <div class="container">
+        <h3>Other User's Travel Plans</h3>
+        <table class = "table">
+            <tr class = "thead-dark">
+                <th>User</th>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Do You Want to Join?</th>
+            </tr>
+            {% if others %}
+                {% for travel in others %}
+                    <tr>
+                        <td>{{travel.creator.name}}</td>
+                        <td><a href="/travels/destination/{{travel.id}}">{{travel.destination}}</a></td>
+                        <td>{{travel.start_date}}</td>
+                        <td>{{travel.end_date}}</td>
+                        <td><a href="/travels/join/{{travel.id}}">Join</td></a>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+</div> -->

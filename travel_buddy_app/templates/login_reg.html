@@ -1,104 +1,143 @@
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Login/Register</title>
-    <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
-        body{
-            padding: 80px;
-        }
-        .display-4{
-            margin-bottom: 40px;
-        }
-        .register{
-            padding: 50px;
-            width: 450px;
-            display: inline-block;
-            border: 1px solid black;
-        }
-        .login{
-            padding: 50px;
-            width: 450px;
-            display: inline-block;
-            vertical-align: top;
-            margin-left: 130px;
-            border: 1px solid black;
-        }
-
-        .title{
-            width: 50%;
-            text-align: center;
-            background-color: #fff;
-            margin-top: -75px;
-            margin-bottom: 40px;
-        }
-        .title2{
-            width: 40%;
-            text-align: center;
-            background-color: #fff;
-            margin-top: -75px;
-            margin-bottom: 40px;
-        }
-
-        form > input{
-            margin-bottom: 13px;
-        }
-        .btn{
-            width: 90px;
-            margin-left: 260px;
-            box-shadow: 5px 5px 5px #746f6f;
-        }
-        .messages{
-            margin-top: 5px;
-            font-size: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'styles/login.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Sign Up and Login</title>
 </head>
 <body>
-    <div class = "container">
-        <h1 class = "display-4">Welcome!</h1>
-        <div class = "register">
-            <div class="title"><h2>Register</h2></div>
-            {% if messages and request.session.err == "register" %}
+    <header>
+        <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+        <a href="/travels" class = "home">Home</a>
+    </header>
+    {% if signup %}
+        {% if messages and request.session.err == "register" %}
             <div class="messages">   
                 {% for message in messages %} 
                     <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
                 {% endfor %}
             </div>
-            {% endif %}
-            <form action="/registerUser" method = "POST">
-                {% csrf_token %}
-                <input type="text" name = "name" placeholder="Name" class = "form-control">
-                <input type="text" name = "username" placeholder="Username" class = "form-control">
-                <input type="password" name = "password" placeholder="Password" class = "form-control">
-                <p style = "font-size: 0.8rem">* Password needs to be at least 8 characters</p>
-                <input type="password" name = "confirm_pw" placeholder="Confirm Password" class = "form-control">
-                <input type="submit" value = "Register" class = "btn btn-danger">
-            </form>
-        </div>
-        <div class = "login">
-            <div class="title2"><h2>Login</h2></div>
-            {% if messages and request.session.err == "login" %}
+        {% endif %}
+
+        {% if messages and request.session.err == "login" %}
             <div class="messages">   
                 {% for message in messages %} 
                     <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
                 {% endfor %}
             </div>
-            {% endif %}
-            <form action="/loginUser" method = "POST">
-                {% csrf_token %}
-                <input type="text" name = "username" placeholder="Username" class = "form-control">
-                <input type="password" name = "password" placeholder="Password" class = "form-control">
-                <input type="submit" value = "Login" class = "btn btn-danger">
-            </form>
+        {% endif %}
+        <div class="container right-panel-active" id="container">
+            <div class="form-container sign-up-container">
+                <form action="/registerUser" class="signup" method = "POST">
+                        {% csrf_token %}
+                    <h1>Create Account</h1>
+                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="confirm_pw" placeholder="Confirm Password">
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+    
+            <div class="form-container sign-in-container">
+                <form action="/loginUser" class="login" method = "POST">
+                    {% csrf_token %}
+                    <h1>Log In</h1>
+                    <input type="username" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
+        
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To view your trips and join other trips please login</p>
+                        <button class="ghost" id="signIn">Log In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Sign up and start your journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+    {% else %}    
+        {% if messages and request.session.err == "register" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if messages and request.session.err == "login" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form action="/registerUser" method = "POST">
+                        {% csrf_token %}
+                    <h1>Create Account</h1>
+                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="confirm_pw" placeholder="Confirm Password">
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+        
+            <div class="form-container sign-in-container">
+                <form action="/loginUser" method = "POST">
+                    {% csrf_token %}
+                    <h1>Log In</h1>
+                    <input type="username" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
+        
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To view your trips and join other trips please login</p>
+                        <button class="ghost" id="signIn">Log In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Sign up and start your journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+<script type="text/javascript">
+	const signUpButton = document.getElementById('signUp');
+	const signInButton = document.getElementById('signIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+		container.classList.add("right-panel-active");
+	});
+	signInButton.addEventListener('click', () => {
+		container.classList.remove("right-panel-active");
+	});
+</script>
+
 </body>
 </html>

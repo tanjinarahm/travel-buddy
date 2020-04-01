@@ -1,95 +1,54 @@
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Add Plan</title>
-    <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-            font-family: "Nunito", sans-serif
-        }
-        header{
-            padding: 10px;
-            margin-bottom: 60px;
-            background-color: #be8585;
-        }
-        .container{
-            width: 50%;
-        }
-        .home{
-            padding: 5px 5px;
-            margin: 0px 0px 0px 1400px;
-            vertical-align: top;
-            line-height: 40px;
-            display: inline-block;
-            color:black;
-            text-decoration: underline;
-        }
-        .logout{
-            padding: 5px 5px;
-            text-align: left;
-            margin: 0px 0px 0px 10px;
-            vertical-align: top;
-            line-height: 40px;
-            display: inline-block;
-            color:black;
-            text-decoration: underline;
-        }
-        .little_margin{
-            margin-left: 12px;
-        }
-        h4{
-            margin-bottom: 30px;
-        }
-        .btn{
-            width: 100px;
-            margin-left: 570px;
-            box-shadow: 5px 5px 5px #746f6f;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'styles/addtravels.css'%}">
+    <title>Create Trip</title>
 </head>
 <body>
-    <header>
-        <a href="/travels" class = "home">Home</a>
-        <a href="/logout" class = "logout">Logout</a>
-    </header>
+    <!-- <div>
+        <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+        <nav>
+            <ul>
+                <li><a href="travels" class="button login-btn">Home</a></li>
+                <li><a class = "button login-btn">|</a></li>
+                <li><a href="logout" class="button login-btn">Log out</a></li>
+            </ul>
+        </nav>
+    </div> -->
     <div class = "container">
+        <div>
+            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <nav>
+                <ul>
+                    <li><a href="/travels" class="button login-btn">Home</a></li>
+                    <li><a class = "button login-btn">|</a></li>
+                    <li><a href="/logout" class="button login-btn">Log out</a></li>
+                </ul>
+            </nav>
+        </div>
         {% for message in messages %}
-        <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
         {% endfor %}
-        <h4 class = "display-4">Add a Trip: </h4>
-        <form action="/add" method = "POST">
-            {% csrf_token %}
-            <div class = "form-group row">
-                <label class = "col-sm-3 col-form-label" >Destination: </label>
-                <div class = "col-sm-7">
-                    <input type="text" name = "destination" class=" form-control">
-                </div>
+        <div class="box">
+            <div class="left"></div>
+            <div class="right">
+                <h2>Add a Trip: </h2>
+                <form action="/add" method = "POST">
+                    {% csrf_token %}
+                    <input type="text" name = "destination" class="field" placeholder="Destination">                   
+                    <input type="date" name = "start_date" class="field" placeholder="Start Date">
+                    <input type="date" name = "end_date" class="field" placeholder="End Date">
+                    <textarea name="description" class="field" placeholder="Description"></textarea>
+                    <input type="text" class="field area"name = "description" placeholder="Description">
+                    <button type="submit" class="btn">Add Trip</button>
+                </form>
             </div>
-            <div class = "form-group row">
-                <label class = "col-sm-3 col-form-label" >Description: </label>
-                <div class = "col-sm-7">
-                    <input type="text" name = "description" class=" form-control">
-                </div>
-            </div>
-            <div class = "form-group row">
-                <label class = "col-sm-4 col-form-label">Travel Date From: </label>
-                <div class = "col-sm-6">
-                    <input type="date" name = "start_date" class="form-control">
-                </div>
-            </div>
-            <div class = "form-group row">
-                <label class = "col-sm-4 col-form-label">Travel Date To: </label>
-                <div class = "col-sm-6">
-                    <input type="date" name = "end_date" class="form-control">
-                </div>
-            </div>
-            <input type="submit" value = "Add" class = "btn btn-secondary">
-        </form>
+        </div>
     </div>
 </body>
 </html>
