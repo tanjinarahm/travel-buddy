@@ -119,6 +119,10 @@ h2:after{
     background-color: #007183;
 }
 
+span{
+    margin-right: auto;
+}
+
 .field{
     width:100%;
     padding: 0.5rem 1rem;
@@ -140,7 +144,10 @@ h2:after{
 }
 
 .area{
+    line-height: auto;
     min-height: 150px;
+    text-overflow: scroll;
+    resize: vertical;
 }
 
 .btn{
@@ -160,9 +167,37 @@ h2:after{
     border: 1px solid #007183;
 }
 
+
+ul {
+    list-style-position: outside;
+}
+
+.error {
+    margin-bottom:0.8rem;
+    list-style-type: none;
+    color: crimson;
+}
+
+i {
+    color: crimson;
+    margin-right: 5px;
+}
+
+
+
 @media screen and (max-width:400px){
     .box{
         grid-template-columns: 1fr;
+    }
+
+    .error {
+       font-size: 0.8rem;
+       margin-bottom:0.8rem;
+    }
+    
+    i {
+        color: crimson;
+        margin-right: 5px;
     }
     .left{
         height: 200px;

@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/7e3e6f27d8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'styles/addtravels.css'%}">
     <title>Create Trip</title>
 </head>
@@ -22,7 +23,7 @@
     </div> -->
     <div class = "container">
         <div>
-            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <a href="/travels"><img src="/static/img/logo-daone.svg" alt="logo" id="logo"></a>
             <nav>
                 <ul>
                     <li><a href="/travels" class="button login-btn">Home</a></li>
@@ -31,20 +32,31 @@
                 </ul>
             </nav>
         </div>
-        {% for message in messages %}
-            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
-        {% endfor %}
+        <!-- <div class="messages">
+            {% for message in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+            {% endfor %}
+        </div> -->
         <div class="box">
             <div class="left"></div>
             <div class="right">
                 <h2>Add a Trip: </h2>
+                <div class="messages">
+                    <ul>
+                        {% for message in messages %}
+                            <li class="error"{% if message.tags%} class="{{message.tags}}" {% endif %}> <i class="fas fa-exclamation-circle"></i> {{message}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 <form action="/add" method = "POST">
                     {% csrf_token %}
-                    <input type="text" name = "destination" class="field" placeholder="Destination">                   
+                    <input type="text" name = "destination" class="field" placeholder="Destination">
+                    <!-- <span style="text-align: left;">Start date </span>                   -->
                     <input type="date" name = "start_date" class="field" placeholder="Start Date">
+                    <!-- <span style="text-align: left;">End date</span> -->
                     <input type="date" name = "end_date" class="field" placeholder="End Date">
-                    <textarea name="description" class="field" placeholder="Description"></textarea>
-                    <input type="text" class="field area"name = "description" placeholder="Description">
+                    <!-- <textarea name="description" class="field" placeholder="Description"></textarea> -->
+                    <textarea type="text" class="field area"name = "description" placeholder="Description"></textarea>
                     <button type="submit" class="btn">Add Trip</button>
                 </form>
             </div>

@@ -7,30 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'styles/login.css'%}">
+    <script src="https://kit.fontawesome.com/7e3e6f27d8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Sign Up and Login</title>
 </head>
 <body>
     <header>
-        <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+        <a href="/travels"><img src="/static/img/logo-daone.svg" alt="logo" id="logo"></a>
         <a href="/travels" class = "home">Home</a>
     </header>
+
     {% if signup %}
         {% if messages and request.session.err == "register" %}
             <div class="messages">   
-                {% for message in messages %} 
-                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
-                {% endfor %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="error-msg"{% if message.tags%} class="{{message.tags}}" {% endif %}> <i class="fas fa-exclamation-circle"></i> {{message}}</li>
+                    {% endfor %}
+                </ul>
             </div>
         {% endif %}
-
         {% if messages and request.session.err == "login" %}
-            <div class="messages">   
-                {% for message in messages %} 
-                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+            <ul>
+                {% for message in messages %}
+                    <li class="error-msg"{% if message.tags%} class="{{message.tags}}" {% endif %}> <i class="fas fa-exclamation-circle"></i> {{message}}</li>
                 {% endfor %}
-            </div>
+            </ul>
         {% endif %}
+        
         <div class="container right-panel-active" id="container">
             <div class="form-container sign-up-container">
                 <form action="/registerUser" class="signup" method = "POST">
@@ -70,21 +74,27 @@
             </div>
         </div>
 
-    {% else %}    
+    {% else %} 
+
         {% if messages and request.session.err == "register" %}
             <div class="messages">   
-                {% for message in messages %} 
-                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
-                {% endfor %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="error-msg"{% if message.tags%} class="{{message.tags}}" {% endif %}> <i class="fas fa-exclamation-circle"></i> {{message}}</li>
+                    {% endfor %}
+                </ul>
             </div>
         {% endif %}
         {% if messages and request.session.err == "login" %}
             <div class="messages">   
-                {% for message in messages %} 
-                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
-                {% endfor %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="error-msg"{% if message.tags%} class="{{message.tags}}" {% endif %}> <i class="fas fa-exclamation-circle"></i> {{message}}</li>
+                    {% endfor %}
+                </ul>
             </div>
         {% endif %}
+
         <div class="container" id="container">
             <div class="form-container sign-up-container">
                 <form action="/registerUser" method = "POST">

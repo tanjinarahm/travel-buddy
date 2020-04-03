@@ -207,3 +207,115 @@
 
 
 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'styles/viewtrip.css'%}">
+    <title>Destination</title>
+</head>
+<body>
+    <div class = "container">
+        <div>
+            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <nav>
+                <ul>
+                    <li><a href="/travels" class="button login-btn">Home</a></li>
+                    <li><a class = "button login-btn">|</a></li>
+                    <li><a href="/logout" class="button login-btn">Log out</a></li>
+                </ul>
+            </nav>
+        </div>
+        <h1>{{travel.destination}}</h1>
+        <h3>Creator: {{travel.creator.name}}</h3>
+        <h4>Date From: {{travel.start_date}}</h4>
+        <h4>Date To: {{travel.end_date}}</h4>
+        <h4>Description: {{travel.description}}</h1>
+
+        <div class = "others">
+            <h2>Travel buddies joining the trip: </h2>
+            {% if others %}
+                <ul>
+                {% for other in others %}
+                {% if other.name != travel.creator.name %}
+                    <li>{{other.name}}</li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>
+
+
+
+<h1>{{travel.destination}}</h1>
+        <h3>Creator: {{travel.creator.name}}</h3>
+        <h4>Date From: {{travel.start_date}}</h4>
+        <h4>Date To: {{travel.end_date}}</h4>
+        <h4>Description: {{travel.description}}</h1>
+
+        <div class = "others">
+            <h2>Travel buddies joining the trip: </h2>
+            {% if others %}
+                <ul>
+                {% for other in others %}
+                {% if other.name != travel.creator.name %}
+                    <li>{{other.name}}</li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+
+        {% for message in messages %}
+                        <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                    {% endfor %}
+
+
+
+
+
+
+{% if messages and request.session.err == "register" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if messages and request.session.err == "login" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+
+
+        
+{% if messages and request.session.err == "register" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if messages and request.session.err == "login" %}
+            <div class="messages">   
+                {% for message in messages %} 
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>    
+                {% endfor %}
+            </div>
+        {% endif %}
+

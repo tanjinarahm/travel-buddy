@@ -12,7 +12,7 @@
 <body>
     {% if logged_in %}
         <div class="main">
-            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <a href="/travels"><img src="/static/img/logo-daone.svg" alt="logo" id="logo"></a>
             <a href="/logout" class = "logout-btn">Log out</a>
             <div>
                 <h1 class = "title"> Welcome {{user.name}}!</h1>
@@ -21,7 +21,7 @@
         </div>
     {% else %}
         <div class="main">
-            <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
+            <a href="/travels"><img src="/static/img/logo-daone.svg" alt="logo" id="logo"></a>
             <nav>
                 <ul>
                     <li><a href="/login" class = "button login-btn">Login</a></li>
@@ -41,9 +41,9 @@
         <h2>About Us.</h2>
         <hr>
         <div class="about-grid">
-            <img src="/static/img/about2.jpg" class="about-image" alt="about">
+            <img src="/static/img/about3.jpg" class="about-image" alt="about">
             <p>
-            Have you been searching and searching to travel with someone?<br><br> You have come to the right place if you find yourself in need of finding a travel buddy. You can create trips and view the details of trips until you find the perfect match for you. <br><br>
+           Planning a trip? Want someone to share the journey with?<br><br> Your travel companion is just a click away. You have come to the right place if you find yourself in need of finding a travel buddy. You can create trips and view the details of trips until you find the perfect match for you. <br><br>
            No matter how you imagine your perfect travel buddy, you can always find someone to team up with on Travel Buddy. We try to make the experience of finding a travel buddy as easy as possible so you can start traveling together in no time!!</p>
         </div>
     </div>
@@ -58,15 +58,21 @@
                     <div class="cards">
                         {% for travel in travels %}
                         <div class="card">
-                            <p style="margin-bottom: 7px; font-weight: lighter;">{{travel.destination}}</p>
-                            <p><span>Creator: </span>{{travel.creator.name}}</p>
-                            <p><span>Start Date: </span>{{travel.start_date}}</p>
-                            <p><span>End Date: </span>{{travel.end_date}}</p>
-                            <p><span>Description: </span>{{travel.description}}</p>
-                            <a href="/travels/destination/{{travel.id}}">More info</a>
+                            <p style="margin-bottom: 7px;" class="card-name">{{travel.destination}}</p>
+                            <p style="opacity: 0.5; margin-top: 3px; margin-bottom: 5px;">{{travel.start_date}} - {{travel.end_date}}</p>
+                            <!-- <p style="opacity:0.7; margin-bottom: 5px;"><span>Creator: </span>{{travel.creator.name}}</p> -->
+                            <!-- <p style="margin-bottom:5px; opacity:0.7;"><span>Description: </span>{{travel.description}}</p> -->
+                            <a style="opacity: 0.8; color: #6288d6;" href="/travels/destination/{{travel.id}}">More info</a>
                         </div>
                         {% endfor %}
                     </div>
+                {% else %}
+                <div class="your-travels">
+                    <div class="container">
+                        <p>Sorry, you dont have any trips yet</p>
+                        <img src="/static/img/sadface.png" class="sadface" alt="sad face">
+                    </div>
+                </div>
                 {% endif %}
                 <a href="/travels/add" class = "join-btn"><button class="join">Add Travel Plan</button></a>
             </div>
@@ -79,7 +85,7 @@
                 <hr>
                 <p>Sorry, you dont have any trips yet</p>
                 <img src="/static/img/sadface.png" class="sadface" alt="sad face">
-                <p>  <a href="/login" class = "join-btn"><button class="join">Join</button></a> </p>
+                <p>  <a href="/signup" class = "join-btn"><button class="join">Join</button></a> </p>
             </div>
         </div>
     {% endif %}
@@ -102,18 +108,17 @@
                     <div class="cards">
                         {% for travel in others %}
                         <div class="card">
-                            <p style="margin-bottom: 7px; font-weight: lighter;">{{travel.destination}}</p>
-                            <p><span>Creator: </span>{{travel.creator.name}}</p>
-                            <p><span>Start Date: </span>{{travel.start_date}}</p>
-                            <p><span>End Date: </span>{{travel.end_date}}</p>
-                            <a href="/travels/join/{{travel.id}}">Join</a>
-                            <a href="/travels/destination/{{travel.id}}">More info</a>
+                            <p style="margin-bottom: 7px;" class="card-name">{{travel.destination}}</p>
+                            <p style="opacity: 0.5; margin-top: 3px; margin-bottom: 5px;">{{travel.start_date}} - {{travel.end_date}}</p>
+                            <p style="opacity:0.7; margin-bottom: 8px;"><span>Creator: </span>{{travel.creator.name}}</p>
+                            <a style="opacity: 0.8; color: #6288d6; margin-right: 6px;" href="/travels/join/{{travel.id}}">Join</a>
+                            <a style="opacity: 0.8; color: #6288d6;" href="/travels/destination/{{travel.id}}">More info</a>
                         </div>
                         {% endfor %}
                     </div>
                 {% endif %}
             </div>
-        </div>
+        </div> 
     {% else %}
         <div class="all-travels">
             <div class="container">
@@ -123,10 +128,9 @@
                     <div class="cards">
                         {% for travel in others %}
                         <div class="card">
-                            <p style="margin-bottom: 7px; font-weight: lighter;">{{travel.destination}}</p>
-                            <p><span>Creator: </span>{{travel.creator.name}}</p>
-                            <p><span>Start Date: </span>{{travel.start_date}}</p>
-                            <p><span>End Date: </span>{{travel.end_date}}</p>
+                            <p style="margin-bottom: 7px;" class="card-name">{{travel.destination}}</p>
+                            <p style="opacity: 0.5; margin-top: 3px; margin-bottom: 2px;">{{travel.start_date}} - {{travel.end_date}}</p>
+                            <p style="opacity:0.8;"><span>Creator: </span>{{travel.creator.name}}</p>
                         </div>
                         {% endfor %}
                     </div>

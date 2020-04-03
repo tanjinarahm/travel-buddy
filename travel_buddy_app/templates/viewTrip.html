@@ -10,34 +10,42 @@
     <title>Destination</title>
 </head>
 <body>
-    <div>
-        <img src="/static/img/logo-daone.svg" alt="logo" id="logo">
-        <nav>
-            <ul>
-                <li><a href="/travels" class="button login-btn">Home</a></li>
-                <li><a class = "button login-btn">|</a></li>
-                <li><a href="/logout" class="button login-btn">Log out</a></li>
-            </ul>
-        </nav>
-    </div>
     <div class = "container">
-        <h1 class = "display-4">{{travel.destination}}</h1>
-        <h3 style = "margin-left: 20px">Planned by: {{travel.creator.name}}</h3>
-        <h4 style = "margin-left: 20px">Description: {{travel.description}}</h1>
-        <h4 style = "margin-left: 20px">Travel Date From: {{travel.start_date}}</h4>
-        <h4 style = "margin-left: 20px">Travel Date To: {{travel.end_date}}</h4>
-        <div class = "others">
-            <h2>Other users' joining the trip: </h2>
-            {% if others %}
+        <div>
+            <a href="/travels"><img src="/static/img/logo-daone.svg" alt="logo" id="logo"></a>
+            <nav>
                 <ul>
-                {% for other in others %}
-                {% if other.name != travel.creator.name %}
-                    <li>{{other.name}}</li>
-                {% endif %}
-                {% endfor %}
+                    <li><a href="/travels" class="button login-btn">Home</a></li>
+                    <li><a class = "button login-btn">|</a></li>
+                    <li><a href="/logout" class="button login-btn">Log out</a></li>
                 </ul>
-            {% endif %}
+            </nav>
         </div>
+        <div class="card">
+            <!-- <div class="profile-sidebar">
+                <h2 class="profile-name">{{travel.destination}}</h2>
+                <p class="profile-position">{{travel.creator.name}}</p>
+            </div> -->
+            <div class="profile-main">
+                <h2 class="profile-name">{{travel.destination}}</h2>
+                <p class="profile-position">{{travel.start_date}} - {{travel.end_date}}</p>
+                <p class="profile-bodyR"><span>Creator: </span>{{travel.creator.name}}</p>
+                <p class="profile-body"> <span> Description: </span>{{travel.description}}</p>
+                <div class = "others profile-body">
+                    <h2>Travel buddies: </h2>
+                    {% if others %}
+                        <ul class="all-joiners">
+                        {% for other in others %}
+                        {% if other.name != travel.creator.name %}
+                            <li class="all-join">{{other.name}}</li>
+                        {% endif %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>

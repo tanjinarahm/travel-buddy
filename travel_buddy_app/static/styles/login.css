@@ -5,7 +5,22 @@
     font-family: Montserrat;
 }
 
-@media(max-width: 520px) {
+.error-msg {
+    list-style-type: none;
+    font-size: 1rem;
+    color: crimson;
+}
+
+i {
+    color: crimson;
+    margin-right: 5px;
+}
+
+
+
+
+
+@media(max-width: 515px) {
     .overlay-panel.overlay-right,
     .overlay-panel.overlay-left{
         display: none !important;
@@ -18,6 +33,7 @@
         background-size: cover;
         background-position: center;
         box-sizing: border-box;
+        text-align: center;
     
     }
 
@@ -39,12 +55,29 @@
         border: none;
     }
 
+    .messages{
+        margin-left: 15px;
+        margin-top: 5rem;
+        text-align: left;
+    }
+
+    li.error-msg {
+        list-style-type: none;
+        color: crimson;
+        font-size: 0.8rem;
+    }
+
+    i {
+        color: crimson;
+        /* margin-right: 5px; */
+    }
+
    form{
-       margin-top: 2rem;
+       /* margin-top: 2rem; */
    }
 
     #container.container{
-        margin-top: 5rem;
+        margin-top: 4rem;
     }
 
     h1{
@@ -103,7 +136,7 @@
 
 
 
-@media(min-width: 520px) {
+@media(min-width: 515px) {
     * {
         box-sizing: border-box;
     }
@@ -169,8 +202,18 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         transition: transform 80ms ease-in;
+        cursor: pointer;
     }
     
+    /* button:hover{
+        border: none;
+        background-color: #f4bf9d;
+    } */
+
+    button[type=submit]:hover {
+        border: none;
+        background-color: #f4bf9d;
+      }
     button:active {
         transform: scale(0.95);
     }
@@ -329,6 +372,8 @@
     }
     
 }
+
+
 
 @media(max-width: 1100px){
     h1 {

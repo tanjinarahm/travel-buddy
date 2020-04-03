@@ -21,10 +21,11 @@ html{
 }
 
 hr{
-    width: 80px;
+    width: 70px;
     border-color: #057d8f;
     margin: 0 auto;
     margin-bottom: 1rem;
+    opacity: 0.8;
 }
 
 .main{
@@ -166,12 +167,14 @@ button:hover::after{
     margin-top: 1rem;
     font-size: 0.95rem;
     text-align: left;
+    opacity: 0.5;
     /* letter-spacing: 1px; */
 }
 
 .about-image{
     width:100%;
     max-width:500px;
+    box-shadow: 0 0 19px 10px rgba(0,0,0,0.19);
     /* border-radius: 20px; */
  }
 
@@ -238,7 +241,7 @@ button:hover::after{
     width: 100%;
     margin: 0 auto;
     text-align: center;
-    padding: 2rem 2rem;
+    padding: 1rem 1rem;
 } 
 
 .your-travels-in h2{
@@ -249,13 +252,9 @@ button:hover::after{
     margin-bottom: 1rem;
     letter-spacing: 3px;
 }
-
-.your-travels-in span,
-.your-travels span {
+span{
     font-weight: bolder;
 }
-
-
 
 /*----------------------- YOUR TRAVELS NOT-logged-in--------------*/
 
@@ -263,7 +262,7 @@ button:hover::after{
     width: 100%;
     margin: 0 auto;
     text-align: center;
-    padding: 2rem 2rem;
+    padding: 1rem 1rem;
 }
 
 .your-travels h2{
@@ -310,8 +309,8 @@ button:hover::after{
 .all-travels{
     width: 100%;
     margin: 0 auto;
-    /* text-align: center; */
-    padding: 2rem 2rem;
+    text-align: center;
+    padding: 1rem 1rem;
 }
 
 .all-travels h2{
@@ -323,10 +322,9 @@ button:hover::after{
     letter-spacing: 3px;
 }
 
-.all-travels span {
-    font-weight: bolder;
-}
 
+
+/*-------------CARD-------------------*/
 
 .cards{
     padding: 1em 0;
@@ -343,6 +341,11 @@ button:hover::after{
     background: #fff;
 }
 
+.card-name{
+    font-size: 1rem;
+    line-height: 1.1;
+    letter-spacing: 3px;
+}
 
 
 /* ---------------------REVIEWS-------------------- */
@@ -351,8 +354,9 @@ button:hover::after{
     width: 100%;
     margin: 0 auto;
     text-align: center;
+    /* align-items: center; */
     /* max-width: 1440px; */
-    padding: 2rem 2rem;
+    padding: 1rem 1rem;
     background: #f4be9d4b;
     /* background-color: rgba(0,0,0,0.1); */
 }
@@ -388,6 +392,7 @@ button:hover::after{
     border-radius: .4em;
     padding: 2rem;
     margin-bottom: 1rem;
+    box-shadow: 0px 10px 19px 15px rgba(0,0,0,0.19);
 }
 
 .speech-bubble:after {
@@ -401,7 +406,7 @@ button:hover::after{
 	border-top-color: #494949;
 	border-bottom: 0;
 	margin-left: -1em;
-	margin-bottom: -1em;
+    margin-bottom: -1em;
 }
 .name{
     text-align: right;
